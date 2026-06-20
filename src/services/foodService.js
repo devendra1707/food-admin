@@ -1,0 +1,74 @@
+import api from "./api";
+
+export const addFoods = async (foodData, image) => {
+    const formData = new FormData();
+
+    formData.append("food", JSON.stringify(foodData));
+    formData.append("file", image);
+
+    const response = await api.post("/food/_add", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+
+    return response.data;
+};
+
+export const getFoodList = async () => {
+    const response = await api.post("/food/_foods");
+    return response.data;
+};
+
+export const deleteFood = async (foodId) => {
+    const response = await api.delete(`/food/${foodId}`);
+    return response.status === 204;
+};
+
+
+// import axios from "axios";
+
+// const API_URL = 'http://localhost:8085/food-application/api/food/'
+
+// export const addFoods = async (foodData, image) => {
+//     const formData = new FormData();
+//     formData.append('food', JSON.stringify(foodData));
+//     formData.append('file', image);
+
+//     try {
+//         await axios.post(
+//             API_URL + `_add`,
+//             formData,
+//             {
+//                 headers: {
+//                     'Content-Type': 'multipart/form-data'
+//                 }
+//             }
+//         );
+//     } catch (error) {
+//         console.log('Error', error);
+//         throw error;
+//     }
+// }
+
+// export const getFoodList = async () => {
+//     try {
+//         const response = await axios.post(API_URL + `_foods`);
+
+//         return response.data;
+
+//     } catch (error) {
+//         console.log('Error fatching food list', error);
+//         throw error;
+//     }
+// }
+
+// export const deleteFood = async (foodId) => {
+//     try {
+//         const respose = await axios.delete(API_URL + foodId);
+//         return respose.status == 204;
+//     } catch (error) {
+//         console.log('Error while deleting the food ...', error);
+//         throw error;
+//     }
+// }
